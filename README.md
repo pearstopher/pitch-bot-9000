@@ -18,3 +18,8 @@ Libraries:
 
 ### **How to Run**
     python3 pitchbot.py filename.wav <'up' or 'down'>
+
+
+### **How not to Run**
+
+    python3 pitchbot.py filename.wav <'left' or 'right'>  # this makes no sense
