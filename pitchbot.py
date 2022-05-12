@@ -23,17 +23,17 @@ if len(sys.argv) != 3:
 
 else:
 
-    # Step 1: Preprocess commandline arguments
+    # STEP 1: Preprocess commandline arguments
 
-    # Read in the input WAV file
+    # read in the input WAV file
     file = sys.argv[1]
     s, samples = wf.read(file)
 
-    # Read in user specification of pitch direction
+    # read in user specification of pitch direction
     shift = 1 if sys.argv[2] == 'up' else -1
     # shift *= sys.argv[3]  # multiply by num_steps (future)
 
-    # Step 2: Apply the Fast Fourier Transform to the sample data.
+    # STEP 2: Apply the Fast Fourier Transform to the sample data.
     fft = scipy.fft.rfft(samples)
 
     # Step 3: Use pitch detection to determine the dominant frequencies in the file.
