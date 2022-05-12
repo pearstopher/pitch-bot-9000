@@ -1,7 +1,11 @@
-# Christopher Juncker - juncker@pdx.edu
-# Clara Stickney - cstick2@pdx.edu 
-# CS 410P - Spring 2022
+# CS410 Computers, Sound, & Music
+# Spring 2022
 # Term Project: Pitch Bot 9000
+#
+# Members:
+#   Christopher Juncker - juncker@pdx.edu
+#   Clara Stickney - cstick2@pdx.edu
+#
 
 import scipy.io.wavfile as wf
 import scipy.fft
@@ -10,19 +14,31 @@ import numpy as np
 import sys
 
 
-if (len(sys.argv) == 3):
+# default behavior with no arguments:
+#   print instructions on how to run the program correctly
+if len(sys.argv) != 3:
+    print("Usage: pitchbot.py <'file.wav'> <'up'|'down'>\n")
+    # print("Usage: pitchbot.py <'file.wav'> <'up'|'down'> <num_steps>\n")  # future
+
+
+else:
+
     # Step 1: Preprocess commandline arguments
-    #   - Read in the input WAV file
-    #   - Read in user specification of pitch direction
-    filename = sys.argv[1]
-    s, samples = wf.read(filename)
-    direction = sys.argv[2]
+
+    # Read in the input WAV file
+    file = sys.argv[1]
+    s, samples = wf.read(file)
+
+    # Read in user specification of pitch direction
+    shift = 1 if sys.argv[2] == 'up' else -1
+    # shift *= sys.argv[3]  # multiply by num_steps (future)
 
     # Step 2: Apply the Fast Fourier Transform to the sample data.
     fft = scipy.fft.rfft(samples)
 
     # Step 3: Use pitch detection to determine the dominant frequencies in the file.
     #   - Apply window? Other junk? Yee?
+    #
     """
     magnitude = np.abs(fft)
     largest_bin = np.argmax(magnitude)
