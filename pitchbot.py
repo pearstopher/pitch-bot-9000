@@ -57,7 +57,7 @@ else:
     # for i in largest_bins:
     #     print(i)
     for i, lb in enumerate(largest_bins):
-        print("{0:.1f}".format(lb * (sample_rate / segment_size)))
+        print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
 
     # throw in a graph to see it. very slow, good for 1 second sine.wavs
     plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=1, shading='gouraud')
