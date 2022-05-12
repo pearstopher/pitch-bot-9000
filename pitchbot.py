@@ -27,7 +27,7 @@ else:
 
     # read in the input WAV file
     file = sys.argv[1]
-    s, samples = wf.read(file)
+    sample_rate, samples = wf.read(file)
 
     # read in user specification of pitch direction
     shift = 1 if sys.argv[2] == 'up' else -1
@@ -53,4 +53,4 @@ else:
     # Step 6: Apply a filter over the final samples.
 
     # Step 7: Write the samples to a new WAV file on disk.
-    wf.write('pitchified_' + filename, s, result)
+    wf.write('pitchified_' + file, sample_rate, result)
