@@ -12,7 +12,7 @@ import scipy.fft
 from scipy import signal
 import numpy as np
 import sys
-
+import matplotlib.pyplot as plt
 
 # default behavior with no arguments:
 #   print instructions on how to run the program correctly
@@ -33,16 +33,42 @@ else:
     shift = 1 if sys.argv[2] == 'up' else -1
     # shift *= sys.argv[3]  # multiply by num_steps (future)
 
-    # STEP 2: Apply the Fast Fourier Transform to the sample data.
-    fft = scipy.fft.rfft(samples)
 
-    # Step 3: Use pitch detection to determine the dominant frequencies in the file.
-    #   - Apply window? Other junk? Yee?
-    #
-    """
-    magnitude = np.abs(fft)
-    largest_bin = np.argmax(magnitude)
-    center_freq = largest_bin * (s / length)
+    # STEP 2: Apply the Short Time Fourier Transform to the sample data.
+
+    # the fast fourier transform will only tell us the single dominant frequency over
+    # the whole file. Since we will be inputting files with multiple frequencies, we
+    # need to discover the dominant frequencies at each location of the file. The
+    # STFT will accomplish this for us by essentially just chopping the file up into
+    # a bunch of segments and calculating the FFT  of each of them.
+
+    segment_size = int(sample_rate / 6)  # play around with segment size
+
+    f, t, zxx = signal.stft(samples, fs=sample_rate, nperseg=segment_size)
+    # print(np.size(zxx, axis=1))
+
+
+    # STEP 3: Use pitch detection to determine the dominant frequencies in the file.
+
+    # this is just like the Tuner homework except that a largest bin needs to be found
+    # for every segment.
+    largest_bins = np.argmax(np.abs(zxx.real), axis=0)
+    # print(len(largest_bins))
+    # for i in largest_bins:
+    #     print(i)
+    for i, lb in enumerate(largest_bins):
+        print("{0:.1f}".format(lb * (sample_rate / segment_size)))
+
+    # throw in a graph to see it. very slow, good for 1 second sine.wavs
+    plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=1, shading='gouraud')
+    plt.title('STFT Magnitude')
+    plt.ylabel('Frequency [Hz]')
+    plt.xlabel('Time [sec]')
+    plt.show()
+
+    # largest_bin = np.argmax(np.abs(fft))
+    # frequencies = np.fft.rfftfreq(samples.size, d=1./sample_rate)
+    # center_frequency = frequencies[largest_bin]
     """
 
     # Step 4: Shift the detected frequencies in the desired direction.
@@ -54,3 +80,4 @@ else:
 
     # Step 7: Write the samples to a new WAV file on disk.
     wf.write('pitchified_' + file, sample_rate, result)
+    """
