@@ -22,4 +22,4 @@ Libraries:
 
 ### **How not to Run**
 
-    python3 pitchbot.py filename.wav <'left' or 'right'>  # this makes no sense at all
+    python3 pitchbot.py filename.wav <'left' or 'right'>  # this makes no sense
