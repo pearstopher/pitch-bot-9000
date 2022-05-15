@@ -63,13 +63,12 @@ else:
     # this is just like the Tuner homework except that a largest bin needs to be found
     # for every segment.
     largest_bins = np.argmax(np.abs(zxx), axis=0)
-    # print(len(largest_bins))
-    # for i in largest_bins:
-    #     print(i)
+
+    # print the bins (temporarily) to confirm that we're getting the right frequencies
     for i, lb in enumerate(largest_bins):
         print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
 
-    # throw in a graph to see it. very slow, good for 1 second sine.wavs
+    # visualize the frequencies in the file (very slow, good for 1 second sine.wavs)
     plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=20, shading='gouraud')  # how to find vmax?
     plt.title('STFT Magnitude')
     plt.ylabel('Frequency [Hz]')
