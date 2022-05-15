@@ -100,12 +100,14 @@ else:
     # make a new array with the same size as the old one (I love this function)
     new_zxx = np.empty_like(zxx)
 
+    # loop through the bins, copying them into their shifted location in the new array
     zxx_len = len(zxx)
     for i in range(zxx_len):
         new_index = int(i * (2**(shift/12)))
         if new_index < zxx_len:
             new_zxx[new_index] = zxx[i]
 
+    # find the largest bins again for a sanity check (same code as earlier)
     largest_bins = np.argmax(np.abs(new_zxx), axis=0)
 
     # print the bins (temporarily) to confirm that we're getting the right frequencies
