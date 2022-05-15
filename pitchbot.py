@@ -122,10 +122,11 @@ else:
     # call the inverse short time fourier transform on our new shifted FFT data
     _, new_samples = signal.istft(new_zxx, fs=sample_rate)
 
+    # play the original and the shifted sound, one after the other
     helpers.play(samples, sample_rate)
     helpers.play(new_samples, sample_rate)
 
-    # do the fft again on our new samples to print a new spectrogram
+    # do the fft again on our new samples to print a new spectrogram and see what the damage is
     f, t, zxx = signal.stft(new_samples, fs=sample_rate, nperseg=segment_size)
     largest_bins = np.argmax(np.abs(zxx), axis=0)
     plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=20, shading='gouraud')  # how to find vmax?
