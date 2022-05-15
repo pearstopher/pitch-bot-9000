@@ -47,12 +47,11 @@ else:
     f, t, zxx = signal.stft(samples, fs=sample_rate, nperseg=segment_size)
     # print(np.size(zxx, axis=1))
 
-
     # STEP 3: Use pitch detection to determine the dominant frequencies in the file.
 
     # this is just like the Tuner homework except that a largest bin needs to be found
     # for every segment.
-    largest_bins = np.argmax(np.abs(zxx.real), axis=0)
+    largest_bins = np.argmax(np.abs(zxx), axis=0)
     # print(len(largest_bins))
     # for i in largest_bins:
     #     print(i)
@@ -60,7 +59,7 @@ else:
         print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
 
     # throw in a graph to see it. very slow, good for 1 second sine.wavs
-    plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=2*(2**0.5), shading='gouraud')  # how to find vmax?
+    plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=20, shading='gouraud')  # how to find vmax?
     plt.title('STFT Magnitude')
     plt.ylabel('Frequency [Hz]')
     plt.xlabel('Time [sec]')
