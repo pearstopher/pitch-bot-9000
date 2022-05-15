@@ -12,6 +12,7 @@ import scipy.signal as signal
 import numpy as np
 import sys
 import matplotlib.pyplot as plt
+import helpers
 
 
 # default behavior with no arguments:
@@ -114,12 +115,27 @@ else:
     for i, lb in enumerate(largest_bins):
         print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
 
+    #############################################################################
+    # STEP 5: Apply the Inverse FFT to convert the frequencies back into samples.
+    #############################################################################
+
+    # call the inverse short time fourier transform on our new shifted FFT data
+    _, new_samples = signal.istft(new_zxx, fs=sample_rate)
+
+    helpers.play(samples, sample_rate)
+    helpers.play(new_samples, sample_rate)
+
+    # do the fft again on our new samples to print a new spectrogram
+    f, t, zxx = signal.stft(new_samples, fs=sample_rate, nperseg=segment_size)
+    largest_bins = np.argmax(np.abs(zxx), axis=0)
+    plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=20, shading='gouraud')  # how to find vmax?
+    plt.title('STFT Magnitude')
+    plt.ylabel('Frequency [Hz]')
+    plt.xlabel('Time [sec]')
+    plt.show()
 
     """
 
-
-    # Step 5: Apply the Inverse Fast Fourier Transform to convert the frequencies back into a new array of samples.
-    result = np.fft.irfft(samples)
 
     # Step 6: Apply a filter over the final samples.
 
