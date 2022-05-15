@@ -78,9 +78,43 @@ else:
     # largest_bin = np.argmax(np.abs(fft))
     # frequencies = np.fft.rfftfreq(samples.size, d=1./sample_rate)
     # center_frequency = frequencies[largest_bin]
+
+    #################################################################
+    # STEP 4: Shift the detected frequencies in the desired direction
+    #################################################################
+
+    # the equation for shifting FFT bins is the same as the equation for shifting frequencies
+    #   F_new = F * 2^(num_steps/12)
+    #   B_new = B * 2^(num_steps/12)
+    #
+    # I built the whole unsimplified Bin shifting equation in Desmos
+    #   https://www.desmos.com/calculator/2o3dkcudeh
+    #
+    # To shift the frequencies by n steps, we just need to shift all of the bins according to
+    # the bin shifting equation above. Additionally, note that:
+    #   1. the output of the equation will need to be rounded to the nearest integer because
+    #      there is no such thing as a fraction of a bin.
+    #   2. when shifting up, values that exceed the maximum frequency can simply be discarded
+    #
+
+    # make a new array with the same size as the old one (I love this function)
+    new_zxx = np.empty_like(zxx)
+
+    length = len(zxx)
+    for i in range(length):
+        index = int(i * (2**(shift/12)))
+        if index < length:
+            new_zxx[index] = zxx[i]
+
+    largest_bins = np.argmax(np.abs(new_zxx), axis=0)
+
+    # print the bins (temporarily) to confirm that we're getting the right frequencies
+    for i, lb in enumerate(largest_bins):
+        print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
+
+
     """
 
-    # Step 4: Shift the detected frequencies in the desired direction.
 
     # Step 5: Apply the Inverse Fast Fourier Transform to convert the frequencies back into a new array of samples.
     result = np.fft.irfft(samples)
