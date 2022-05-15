@@ -49,7 +49,7 @@ else:
     # current segment size:
     #   sample_rate/10 = each window is one tenth of a second long
     #   because the windows overlap, there will be 21 overlapping 0.1 second windows
-    #   ( 21 == 10*2 + 1 )
+    #   for a 1-second wav ( 21 == 10*2 + 1 )
     segment_size = int(sample_rate / 10)
 
     # apply the STFT to the samples using our segment size
