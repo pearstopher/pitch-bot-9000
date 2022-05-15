@@ -8,11 +8,11 @@
 #
 
 import scipy.io.wavfile as wf
-import scipy.fft
-from scipy import signal
+import scipy.signal as signal
 import numpy as np
 import sys
 import matplotlib.pyplot as plt
+
 
 # default behavior with no arguments:
 #   print instructions on how to run the program correctly
@@ -23,7 +23,9 @@ if len(sys.argv) != 3:
 
 else:
 
+    ##########################################
     # STEP 1: Preprocess commandline arguments
+    ##########################################
 
     # read in the input WAV file
     file = sys.argv[1]
@@ -33,8 +35,9 @@ else:
     shift = 1 if sys.argv[2] == 'up' else -1
     # shift *= sys.argv[3]  # multiply by num_steps (future)
 
-
+    ####################################################################
     # STEP 2: Apply the Short Time Fourier Transform to the sample data.
+    ####################################################################
 
     # the fast fourier transform will only tell us the single dominant frequency over
     # the whole file. Since we will be inputting files with multiple frequencies, we
@@ -42,12 +45,20 @@ else:
     # STFT will accomplish this for us by essentially just chopping the file up into
     # a bunch of segments and calculating the FFT  of each of them.
 
-    segment_size = int(sample_rate / 6)  # play around with segment size
+    # we can play around with segment size to see how it affects the results
+    # current segment size:
+    #   sample_rate/10 = each window is one tenth of a second long
+    #   because the windows overlap, there will be 21 overlapping 0.1 second windows
+    #   ( 21 == 10*2 + 1 )
+    segment_size = int(sample_rate / 20)
 
+    # apply the STFT to the samples using our segment size
+    # f = frequency array, t = time array, zxx = fft data
     f, t, zxx = signal.stft(samples, fs=sample_rate, nperseg=segment_size)
-    # print(np.size(zxx, axis=1))
 
+    ################################################################################
     # STEP 3: Use pitch detection to determine the dominant frequencies in the file.
+    ################################################################################
 
     # this is just like the Tuner homework except that a largest bin needs to be found
     # for every segment.
