@@ -35,7 +35,6 @@ def shift_linear(zxx, shift, largest_bins, sample_rate, segment_size):
         else:
             new_zxx[i, b:] = 0
 
-    print(new_zxx)
     return new_zxx
 
 
