@@ -12,8 +12,8 @@ import scipy.signal as signal
 import numpy as np
 import sys
 import matplotlib.pyplot as plt
-import helpers
-
+import includes.helpers
+import includes.shift
 
 # default behavior with no arguments:
 #   print instructions on how to run the program correctly
@@ -84,29 +84,14 @@ else:
     # STEP 4: Shift the detected frequencies in the desired direction
     #################################################################
 
-    # the equation for shifting FFT bins is the same as the equation for shifting frequencies
-    #   F_new = F * 2^(num_steps/12)
-    #   B_new = B * 2^(num_steps/12)
+    # the pitch shifting algorithm is one of the most important parts of our program.
+    # we have tried multiple algorithms (all discussed in README.md) and all of our
+    # code for these algorithms is contained in 'includes/shift.py'.
     #
-    # I built the whole unsimplified Bin shifting equation in Desmos
-    #   https://www.desmos.com/calculator/2o3dkcudeh
-    #
-    # To shift the frequencies by n steps, we just need to shift all of the bins according to
-    # the bin shifting equation above. Additionally, note that:
-    #   1. the output of the equation will need to be rounded to the nearest integer because
-    #      there is no such thing as a fraction of a bin.
-    #   2. when shifting up, values that exceed the maximum frequency can simply be discarded
-    #
-
-    # make a new array with the same size as the old one (I love this function)
-    new_zxx = np.empty_like(zxx)
-
-    # loop through the bins, copying them into their shifted location in the new array
-    zxx_len = len(zxx)
-    for i in range(zxx_len):
-        new_index = int(i * (2**(shift/12)))
-        if new_index < zxx_len:
-            new_zxx[new_index] = zxx[i]
+    # Each function in 'shift.py' accepts STFT data as it's first argument and
+    # returns another STFT array which has been modified with the goal of shifting
+    # the pitch by the specified amount.
+    new_zxx = includes.shift.shift_log(zxx, shift)
 
     # find the largest bins again for a sanity check (same code as earlier)
     largest_bins = np.argmax(np.abs(new_zxx), axis=0)
@@ -123,8 +108,8 @@ else:
     _, new_samples = signal.istft(new_zxx, fs=sample_rate)
 
     # play the original and the shifted sound, one after the other
-    helpers.play(samples, sample_rate)
-    helpers.play(new_samples, sample_rate)
+    includes.helpers.play(samples, sample_rate)
+    includes.helpers.play(new_samples, sample_rate)
 
     # do the fft again on our new samples to print a new spectrogram and see what the damage is
     f, t, zxx = signal.stft(new_samples, fs=sample_rate, nperseg=segment_size)
