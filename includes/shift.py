@@ -5,6 +5,8 @@
 # All of the pitch shifting functions we have tried are located below.
 #
 import numpy as np
+import scipy.signal as signal
+import includes.helpers
 
 
 ##############################
@@ -72,8 +74,31 @@ def shift_log(zxx, shift):
     return new_zxx
 
 
-###############
-# SHIFT 3 - ...
-###############
+################################
+# SHIFT 3 - Shift Peaks Together
+################################
 
-# ...
+def shift_peaks(zxx, shift):
+    # This function shifts the frequencies on the correct scale just like before.
+    # The main difference is that it finds the locations of the peaks in the FFT
+    #  and then moves the entire peaks instead of the individual bins.
+    # This is helpful because it keeps the peaks from separating into individual
+    #  frequencies like before.
+
+    count = len(zxx[0])
+    peaks = [[] for _ in range(count)]
+
+    for i in range(count):
+        print(len(zxx[:, i]))
+
+        # lots of parameters to play around with here:
+        #   height, threshold, width, prominence
+        #   https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html
+        peaks[i], _ = signal.find_peaks(np.reshape(np.absolute(zxx[:, i]), -1), height=3, prominence=10)
+
+    # graph some random slices of the frequency domain to see if we have found the peaks
+    includes.helpers.graph_peaks(np.absolute(zxx[:, 10]), peaks[10])
+    includes.helpers.graph_peaks(np.absolute(zxx[:, 20]), peaks[20])
+
+
+    return zxx

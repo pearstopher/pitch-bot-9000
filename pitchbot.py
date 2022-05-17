@@ -70,7 +70,7 @@ else:
         print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
 
     # visualize the frequencies in the file (very slow, good for 1 second sine.wavs)
-    includes.helpers.graph(t, f, zxx)
+    # includes.helpers.graph(t, f, zxx)
 
     # largest_bin = np.argmax(np.abs(fft))
     # frequencies = np.fft.rfftfreq(samples.size, d=1./sample_rate)
@@ -94,7 +94,8 @@ else:
     # Shift 2: Log Scaled Shift
     new_zxx = includes.shift.shift_log(zxx, shift)
 
-    # Shift 3: TBD
+    # Shift 3: Log Shift Peaks
+    # new_zxx = includes.shift.shift_peaks(zxx, shift)
 
     # find the largest bins again for a sanity check (same code as earlier)
     largest_bins = np.argmax(np.abs(new_zxx), axis=0)
@@ -111,8 +112,8 @@ else:
     _, new_samples = signal.istft(new_zxx, fs=sample_rate)
 
     # do the fft again on our new samples to print a new spectrogram and see what the damage is
-    f, t, zxx = signal.stft(new_samples, fs=sample_rate, nperseg=segment_size)
-    includes.helpers.graph(t, f, zxx)
+    # f, t, zxx = signal.stft(new_samples, fs=sample_rate, nperseg=segment_size)
+    # includes.helpers.graph(t, f, zxx)
 
     ###############################################
     # STEP 6: Apply a filter over the final samples

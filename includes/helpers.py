@@ -40,3 +40,10 @@ def graph(t, f, zxx):
     plt.ylabel('Frequency [Hz]')
     plt.xlabel('Time [sec]')
     plt.show()
+
+
+def graph_peaks(bins, peaks):
+    plt.plot(bins)
+    plt.plot(peaks, bins[peaks], "x")
+    plt.plot(np.zeros_like(bins), "--", color="gray")
+    plt.show()
