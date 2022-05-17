@@ -117,6 +117,16 @@ else:
     f, t, zxx = signal.stft(new_samples, fs=sample_rate, nperseg=segment_size)
     includes.helpers.graph(t, f, zxx)
 
+    ###############################################
+    # STEP 6: Apply a filter over the final samples
+    ###############################################
+
+    # Whenever we are modifying the FFT bins, the resulting audio needs to be filtered with
+    # a low-pass filter to make sure that no high frequencies were added during the audio
+    # reconstruction process. This is especially important when changing the sample rate of
+    # the audio, but it is a good practice regardless.
+
+
     """
 
 
