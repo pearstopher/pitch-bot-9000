@@ -13,6 +13,7 @@ import numpy as np
 import sys
 import includes.helpers
 import includes.shift
+import includes.filter
 
 # default behavior with no arguments:
 #   print instructions on how to run the program correctly
@@ -109,10 +110,6 @@ else:
     # call the inverse short time fourier transform on our new shifted FFT data
     _, new_samples = signal.istft(new_zxx, fs=sample_rate)
 
-    # play the original and the shifted sound, one after the other
-    includes.helpers.play(samples, sample_rate)
-    includes.helpers.play(new_samples, sample_rate)
-
     # do the fft again on our new samples to print a new spectrogram and see what the damage is
     f, t, zxx = signal.stft(new_samples, fs=sample_rate, nperseg=segment_size)
     includes.helpers.graph(t, f, zxx)
@@ -126,11 +123,16 @@ else:
     # reconstruction process. This is especially important when changing the sample rate of
     # the audio, but it is a good practice regardless.
 
+    # filtering code is located in 'includes/filters.py'
+    new_samples = includes.filter.low_pass(new_samples)
+
+    # play the original and the shifted sound, one after the other
+    includes.helpers.play(samples, sample_rate)
+    includes.helpers.play(new_samples, sample_rate)
 
     """
 
 
-    # Step 6: Apply a filter over the final samples.
 
     # Step 7: Write the samples to a new WAV file on disk.
     wf.write('pitchified_' + file, sample_rate, result)
