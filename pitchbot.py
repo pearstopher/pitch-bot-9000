@@ -91,7 +91,14 @@ else:
     # Each function in 'shift.py' accepts STFT data as it's first argument and
     # returns another STFT array which has been modified with the goal of shifting
     # the pitch by the specified amount.
+
+    # Shift 1: Linear Shift
+    # new_zxx = includes.shift.shift_linear(zxx, shift, largest_bins, sample_rate, segment_size)
+
+    # Shift 2: Log Scaled Shift
     new_zxx = includes.shift.shift_log(zxx, shift)
+
+    # Shift 3: TBD
 
     # find the largest bins again for a sanity check (same code as earlier)
     largest_bins = np.argmax(np.abs(new_zxx), axis=0)

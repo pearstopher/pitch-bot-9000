@@ -11,13 +11,33 @@ import numpy as np
 # SHIFT 1 - Basic Linear Shift
 ##############################
 
-def shift_linear(zxx, shift, fundamental):
+def shift_linear(zxx, shift, largest_bins, sample_rate, segment_size):
     # this one is pretty simple:
-    #   1. calculate the new frequency from the fundamental frequency
-    #   2. calculate how far we need to shift the bins
-    #   3. move all of the bins over by that amount
+
+    #   1. calculate the frequencies of each of the largest bins
+    fundamentals = largest_bins * (sample_rate / segment_size)
+
+    #   2. calculate the new frequencies from the fundamental frequencies
+    new_fundamentals = fundamentals * (2 ** (shift / 12))
+
+    #   3. calculate how far we need to shift the bins
+    new_bins = new_fundamentals / (sample_rate / segment_size)
+
+    bin_shifts = (new_bins - largest_bins).astype(int)  # round back to ints
+
+    #   3. move each of the bins over by the correct amount
+    new_zxx = np.roll(zxx, bin_shifts)
+
     #   4. clean up any frequencies that fall off the top or bottom
-    return
+    for i, b in enumerate(bin_shifts):
+        if b > 0:
+            new_zxx[i, :b] = 0
+        else:
+            new_zxx[i, b:] = 0
+
+    print(new_zxx)
+    return new_zxx
+
 
 #############################
 # SHIFT 2 - Logarithmic Shift
