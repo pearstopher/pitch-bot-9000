@@ -7,6 +7,7 @@
 import numpy as np
 import pyaudio
 import scipy.io.wavfile as wf
+import matplotlib.pyplot as plt
 
 
 def play(samples, sample_rate):
@@ -29,3 +30,13 @@ def play(samples, sample_rate):
 def write(samples, sample_rate, file="default.wav"):
     s = samples.astype(np.int16)
     wf.write(file, sample_rate, s)
+
+
+def graph(t, f, zxx):
+    # display a graph to visualize the frequencies in the file
+    # (very slow, good for 1 second sine.wavs)
+    plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=20, shading='gouraud')  # how to find a good vmax?
+    plt.title('STFT Magnitude')
+    plt.ylabel('Frequency [Hz]')
+    plt.xlabel('Time [sec]')
+    plt.show()

@@ -11,7 +11,6 @@ import scipy.io.wavfile as wf
 import scipy.signal as signal
 import numpy as np
 import sys
-import matplotlib.pyplot as plt
 import includes.helpers
 import includes.shift
 
@@ -70,11 +69,7 @@ else:
         print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
 
     # visualize the frequencies in the file (very slow, good for 1 second sine.wavs)
-    plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=20, shading='gouraud')  # how to find vmax?
-    plt.title('STFT Magnitude')
-    plt.ylabel('Frequency [Hz]')
-    plt.xlabel('Time [sec]')
-    plt.show()
+    includes.helpers.graph(t, f, zxx)
 
     # largest_bin = np.argmax(np.abs(fft))
     # frequencies = np.fft.rfftfreq(samples.size, d=1./sample_rate)
@@ -120,12 +115,7 @@ else:
 
     # do the fft again on our new samples to print a new spectrogram and see what the damage is
     f, t, zxx = signal.stft(new_samples, fs=sample_rate, nperseg=segment_size)
-    largest_bins = np.argmax(np.abs(zxx), axis=0)
-    plt.pcolormesh(t, f, np.abs(zxx), vmin=0, vmax=20, shading='gouraud')  # how to find vmax?
-    plt.title('STFT Magnitude')
-    plt.ylabel('Frequency [Hz]')
-    plt.xlabel('Time [sec]')
-    plt.show()
+    includes.helpers.graph(t, f, zxx)
 
     """
 
