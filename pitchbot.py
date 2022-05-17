@@ -126,14 +126,15 @@ else:
     # filtering code is located in 'includes/filters.py'
     new_samples = includes.filter.low_pass(new_samples)
 
+    ######################################################
+    # STEP 7: Write the samples to a new WAV file on disk.
+    ######################################################
+
     # play the original and the shifted sound, one after the other
     includes.helpers.play(samples, sample_rate)
     includes.helpers.play(new_samples, sample_rate)
 
-    """
+    # rename and save the new samples
+    includes.helpers.write(new_samples, sample_rate, "pitchified_" + file)
 
-
-
-    # Step 7: Write the samples to a new WAV file on disk.
-    wf.write('pitchified_' + file, sample_rate, result)
-    """
+    # THE END
