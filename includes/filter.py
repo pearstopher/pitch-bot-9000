@@ -8,7 +8,7 @@ import scipy.signal as signal
 
 
 # references: https://github.com/pdx-cs-sound/hw-resample, assignment #2
-def low_pass(samples, cutoff = 0.95):
+def low_pass(samples, cutoff=0.95):
     # this generates the filter window parameters
     # https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.kaiserord.html
     #

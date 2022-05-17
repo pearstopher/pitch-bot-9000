@@ -27,7 +27,7 @@ def play(samples, sample_rate):
 
 
 # write the samples to disk
-def write(samples, sample_rate, file="default.wav"):
+def write(samples, sample_rate, file):
     s = samples.astype(np.int16)
     wf.write(file, sample_rate, s)
 
