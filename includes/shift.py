@@ -6,7 +6,7 @@
 #
 import numpy as np
 import scipy.signal as signal
-import includes.helpers
+# import includes.helpers
 
 
 ##############################
@@ -89,16 +89,55 @@ def shift_peaks(zxx, shift):
     peaks = [[] for _ in range(count)]
 
     for i in range(count):
-        print(len(zxx[:, i]))
-
         # lots of parameters to play around with here:
         #   height, threshold, width, prominence
         #   https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html
-        peaks[i], _ = signal.find_peaks(np.reshape(np.absolute(zxx[:, i]), -1), height=3, prominence=10)
+        peaks[i], _ = signal.find_peaks(np.reshape(np.absolute(zxx[:, i]), -1),
+                                        height=3, prominence=10)
 
     # graph some random slices of the frequency domain to see if we have found the peaks
-    includes.helpers.graph_peaks(np.absolute(zxx[:, 10]), peaks[10])
-    includes.helpers.graph_peaks(np.absolute(zxx[:, 20]), peaks[20])
+    # includes.helpers.graph_peaks(np.absolute(zxx[:, 10]), peaks[10])
+    # includes.helpers.graph_peaks(np.absolute(zxx[:, 20]), peaks[20])
 
+    # make a new empty STFT array to fill again like just like before
+    new_zxx = np.zeros_like(zxx)
 
-    return zxx
+    # loop through the STFT data, one slice at a time
+    for i in range(count):
+
+        # for each slice, loop through the array of peak locations
+        num_peaks = len(peaks[i])
+        for j in range(num_peaks):
+
+            # ascertain the relevant peak locations:
+
+            # 1. find the start of the peak
+            #    (halfway between current peak center and previous peak center)
+            start = 0
+            if j > 0:
+                start = peaks[i][j] - int((peaks[i][j] - peaks[i][j-1]) / 2)
+            # else:
+            #    start = peaks[i][j] - 50
+
+            # 2. find the center of the peak
+            #    (that's just the peak)
+            center = peaks[i][j]
+
+            # 3. find the end of the peak
+            #    (halfway between the current peak center and the next peak center)
+            end = len(new_zxx) - 1
+            if j < num_peaks - 1:
+                end = peaks[i][j] + int((peaks[i][j+1] - peaks[i][j]) / 2)
+            # else:
+            #    end = peaks[i][j] + 50
+
+            # now, calculate the new bin center location and offset
+            new_center = int(center * (2 ** (shift / 12)))
+            offset = new_center - center
+
+            # and copy the entire old peak to the new array
+            if start+offset >= 0 and end+offset < len(new_zxx):
+                new_zxx[start+offset:end+offset, i] = zxx[start:end, i]
+
+    # and return the new array at the end of course
+    return new_zxx

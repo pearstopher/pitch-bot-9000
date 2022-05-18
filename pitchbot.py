@@ -92,10 +92,10 @@ else:
     # new_zxx = includes.shift.shift_linear(zxx, shift, largest_bins, sample_rate, segment_size)
 
     # Shift 2: Log Scaled Shift
-    new_zxx = includes.shift.shift_log(zxx, shift)
+    # new_zxx = includes.shift.shift_log(zxx, shift)
 
     # Shift 3: Log Shift Peaks
-    # new_zxx = includes.shift.shift_peaks(zxx, shift)
+    new_zxx = includes.shift.shift_peaks(zxx, shift)
 
     # find the largest bins again for a sanity check (same code as earlier)
     largest_bins = np.argmax(np.abs(new_zxx), axis=0)
@@ -132,7 +132,7 @@ else:
     ######################################################
 
     # play the original and the shifted sound, one after the other
-    includes.helpers.play(samples, sample_rate)
+    # includes.helpers.play(samples, sample_rate)
     includes.helpers.play(new_samples, sample_rate)
 
     # rename and save the new samples
