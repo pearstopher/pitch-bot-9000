@@ -138,6 +138,7 @@ def shift_peaks(zxx, shift):
             # and copy the entire old peak to the new array
             if start+offset >= 0 and end+offset < len(new_zxx):
                 new_zxx[start+offset:end+offset, i] = zxx[start:end, i]
+            # todo: add explicit ase for when start/end exceeds array bounds
 
     # and return the new array at the end of course
     return new_zxx
