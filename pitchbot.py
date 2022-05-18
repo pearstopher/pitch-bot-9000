@@ -17,9 +17,8 @@ import includes.filter
 
 # default behavior with no arguments:
 #   print instructions on how to run the program correctly
-if len(sys.argv) != 3:
-    print("Usage: pitchbot.py <'file.wav'> <'up'|'down'>\n")
-    # print("Usage: pitchbot.py <'file.wav'> <'up'|'down'> <num_steps>\n")  # future
+if len(sys.argv) != 4:
+    print("Usage: pitchbot.py <'file.wav'> <'up'|'down'> <num_steps>\n")
 
 
 else:
@@ -34,7 +33,7 @@ else:
 
     # read in user specification of pitch direction
     shift = 1 if sys.argv[2] == 'up' else -1
-    # shift *= sys.argv[3]  # multiply by num_steps (future)
+    shift *= int(sys.argv[3])  # multiply by num_steps
 
     ####################################################################
     # STEP 2: Apply the Short Time Fourier Transform to the sample data.
