@@ -116,8 +116,6 @@ def shift_peaks(zxx, shift):
             start = 0
             if j > 0:
                 start = peaks[i][j] - int((peaks[i][j] - peaks[i][j-1]) / 2)
-            # else:
-            #    start = peaks[i][j] - 50
 
             # 2. find the center of the peak
             #    (that's just the peak)
@@ -128,8 +126,6 @@ def shift_peaks(zxx, shift):
             end = len(new_zxx) - 1
             if j < num_peaks - 1:
                 end = peaks[i][j] + int((peaks[i][j+1] - peaks[i][j]) / 2)
-            # else:
-            #    end = peaks[i][j] + 50
 
             # now, calculate the new bin center location and offset
             new_center = int(center * (2 ** (shift / 12)))
