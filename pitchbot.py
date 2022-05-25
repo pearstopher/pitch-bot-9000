@@ -15,6 +15,8 @@ import includes.helpers
 import includes.shift
 import includes.filter
 
+PRINT = 0 # whether or not to print extra stuff
+
 # default behavior with no arguments:
 #   print instructions on how to run the program correctly
 if len(sys.argv) != 4:
@@ -65,15 +67,12 @@ else:
     largest_bins = np.argmax(np.abs(zxx), axis=0)
 
     # print the bins (temporarily) to confirm that we're getting the right frequencies
-    for i, lb in enumerate(largest_bins):
-        print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
+    if PRINT:
+        for i, lb in enumerate(largest_bins):
+            print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
 
     # visualize the frequencies in the file (very slow, good for 1 second sine.wavs)
     # includes.helpers.graph(t, f, zxx)
-
-    # largest_bin = np.argmax(np.abs(fft))
-    # frequencies = np.fft.rfftfreq(samples.size, d=1./sample_rate)
-    # center_frequency = frequencies[largest_bin]
 
     #################################################################
     # STEP 4: Shift the detected frequencies in the desired direction
@@ -100,8 +99,9 @@ else:
     largest_bins = np.argmax(np.abs(new_zxx), axis=0)
 
     # print the bins (temporarily) to confirm that we're getting the right frequencies
-    for i, lb in enumerate(largest_bins):
-        print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
+    if PRINT:
+        for i, lb in enumerate(largest_bins):
+            print("{0:.1f}".format(lb * (sample_rate / segment_size)))  # this is the bin-to-frequency equation
 
     #############################################################################
     # STEP 5: Apply the Inverse FFT to convert the frequencies back into samples.
