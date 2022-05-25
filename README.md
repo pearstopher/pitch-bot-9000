@@ -169,7 +169,7 @@ to achieve better frequency coherence for each peak frequency.
 
 
 The above image shows the results of our peak detection algorithm on a cross-section
-of the file “gc.wav” whose samples which were provided in an earlier assignment,
+of the file “gc.wav” whose samples were provided in an earlier assignment,
 which contains frequencies from a short melody played on the guitar. Our algorithm
 attempts to move each of these peaks to their new correct frequency before 
 resynthesizing the STFT data into a new series of pitch shifted samples. Once we 
