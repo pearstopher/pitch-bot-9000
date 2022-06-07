@@ -245,11 +245,19 @@ TODO
 
 [gc.wav (Pitched Down)](http://pearstopher.com/wav/pitchified_gc_down.wav)
 
-### song
+### frequency
 
-[Frequency Song (Original)](http://pearstopher.com/wav/frequency_song.wav)
+written, performed, and pitch-shifted by christopher juncker
+
+[Frequency Song (Original)][http://pearstopher.com/wav/frequency_song.wav]
 
 [Frequency Song (Pitchified)](http://pearstopher.com/wav/pitchified_frequency_song.mp3)
+
+### simpler times
+
+written, performed, and pitch-shifted by clara stickney
+
+[Simpler Times (Pitchified)](http://pearstopher.com/wav/pitchified_Simpler%20Times.wav)
 
 
 
