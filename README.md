@@ -249,7 +249,7 @@ TODO
 
 written, performed, and pitch-shifted by christopher juncker
 
-[Frequency Song (Original)][http://pearstopher.com/wav/frequency_song.wav]
+[Frequency Song (Original)](http://pearstopher.com/wav/frequency_song.wav)
 
 [Frequency Song (Pitchified)](http://pearstopher.com/wav/pitchified_frequency_song.mp3)
 
