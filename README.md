@@ -224,7 +224,7 @@ would be to spend time reinventing the wheel.
 
 ## Conclusion
 
-TODO
+In summary, turns out pitch-shifting is complicated! And hard, if you want to do it accurately. This project was an excellent opportunity to put what we've learned in this class to the test--and expand upon it. We were successful in improving our approach over time and iterations, but a "perfect" solution is beyond our capabilities at this time.
 
 <br>
 
