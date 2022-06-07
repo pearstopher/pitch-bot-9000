@@ -251,7 +251,7 @@ written, performed, and pitch-shifted by christopher juncker
 
 [Frequency Song (Original)](http://pearstopher.com/wav/frequency_song.wav)
 
-[Frequency Song (Pitchified)](http://pearstopher.com/wav/pitchified_frequency_song.mp3)
+[Frequency Song (Pitchified)](http://pearstopher.com/wav/pitchified_frequency_song.wav)
 
 ### simpler times
 
