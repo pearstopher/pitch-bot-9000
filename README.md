@@ -237,5 +237,19 @@ TODO
 
 ## Audio Samples
 
-TODO: Links to some audio samples whose pitch has been modified by our program.
+### gc.wav
+
+[gc.wav (Original, From Class)](http://pearstopher.com/wav/gc.wav)
+
+[gc.wav (Pitched Up)](http://pearstopher.com/wav/pitchified_gc_up.wav)
+
+[gc.wav (Pitched Down)](http://pearstopher.com/wav/pitchified_gc_down.wav)
+
+### song
+
+[Frequency Song (Original)](http://pearstopher.com/wav/frequency_song.wav)
+
+[Frequency Song (Pitchified)](http://pearstopher.com/wav/pitchified_frequency_song.mp3)
+
+
 
